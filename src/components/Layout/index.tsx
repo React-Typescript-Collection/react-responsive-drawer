@@ -17,7 +17,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { ABOUT_PATH, HOME_PATH } from '../../constants/routes';
+
+import menuItems from "./MenuItem";
 
 const drawerWidth = 240;
 
@@ -30,28 +31,12 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface MenuItemProps {
-  name: string;
-  path: any;
-}
-
 const Layout: React.FC<Props> = (props) => {
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeItem, setActiveItem] = useState(
-    localStorage.getItem('activeItem') || "Dashboard"
+    localStorage.getItem('activeItem') || "Home"
   );
-
-  const menuItems: MenuItemProps[] = [
-    {
-      name: "Home",
-      path: HOME_PATH,
-    },
-    {
-      name: "About",
-      path: ABOUT_PATH,
-    },
-  ];
 
   const navigate = useNavigate();
 
@@ -77,11 +62,15 @@ const Layout: React.FC<Props> = (props) => {
       
       <List>
         {menuItems.map((item, index) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton>
+          <ListItem key={item.name} disablePadding
+            style={{ backgroundColor: activeItem === item.name ? "lightblue" : "" }}>  
+            <ListItemButton
+              onClick={() => handleActiveItem(item.name, item.path)}
+            >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {item.icon && <item.icon /> }
               </ListItemIcon>
+
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
@@ -149,6 +138,7 @@ const Layout: React.FC<Props> = (props) => {
           {drawer}
         </Drawer>
       </Box>
+      
       <Box
         component="main"
         className="drawer-main-content"
