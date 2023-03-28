@@ -6,13 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,13 +18,11 @@ import { useNavigate } from 'react-router-dom';
 
 import menuItems from "./MenuItem";
 
+import "./Layout.scss";
+
 const drawerWidth = 240;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
   children: React.ReactNode;
 }
@@ -52,7 +48,7 @@ const Layout: React.FC<Props> = (props) => {
 
   const drawer = (
     <div>
-      <Toolbar>
+      <Toolbar className="layout-drawer-header">
         <Typography variant="h6" noWrap component="div">
           Drawer
         </Typography>
@@ -67,9 +63,11 @@ const Layout: React.FC<Props> = (props) => {
             <ListItemButton
               onClick={() => handleActiveItem(item.name, item.path)}
             >
-              <ListItemIcon>
-                {item.icon && <item.icon /> }
-              </ListItemIcon>
+              {item.icon && 
+                <ListItemIcon>
+                  <item.icon /> 
+                </ListItemIcon>
+              }
 
               <ListItemText primary={item.name} />
             </ListItemButton>
@@ -93,7 +91,7 @@ const Layout: React.FC<Props> = (props) => {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar className="drawer-header">
+        <Toolbar className="layout-drawer-header">
           <IconButton
             color="inherit"
             aria-label="open drawer"
